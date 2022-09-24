@@ -57,7 +57,7 @@ client.on("messageCreate", async (msg) => {
         .get(`${DATA_CHANNEL_ID}`)
         .send(JSON.stringify(orderData));
       await client.channels.cache.get(`${POST_CHANNEL_ID}`).send({
-        content: `NEW ORDER ARRIVED!\n Order ID:${orderID}\n Order details:${req}\n Price:${price}`,
+        content: `@everyone NEW ORDER ARRIVED!\n Order ID:${orderID}\n Order details:${req}\n Price:${price}`,
         components: [row],
       });
     }
