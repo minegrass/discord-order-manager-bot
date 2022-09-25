@@ -94,7 +94,7 @@ client.on("interactionCreate", async (action) => {
 });
 
 client.once("ready", () => {
-  console.log("Bot Online");
+  console.log("Bot Online 9/25/2022 update");
 });
 
 client.login(BOT_TOKEN);
