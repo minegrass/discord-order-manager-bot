@@ -13,9 +13,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const POST_CHANNEL_ID = "1023213223530483785";
-const DATA_CHANNEL_ID = "1023239465906491433";
-const KING_ID = "354146574533656586";
+const POST_CHANNEL_ID = process.env.POST_CHANNEL_ID;
+const DATA_CHANNEL_ID = process.env.DATA_CHANNEL_ID;
+const KING_ID = process.env.KING_ID;
 
 const row = new ActionRowBuilder().addComponents(
   new ButtonBuilder()
