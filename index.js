@@ -66,8 +66,10 @@ client.on("messageCreate", async (msg) => {
 
 client.on("interactionCreate", async (action) => {
   if (action.customId === "takeBtn") {
-    // console.log(action);
-    const orderID = action.message.content.substring(29, 42);
+    const MsgContent = action.message.content;
+    const orderIDIndex = MsgContent.search("Order ID:");
+    // console.log(orderIDIndex);
+    const orderID = MsgContent.substring(orderIDIndex + 9, orderIDIndex + 22);
     // console.log(orderID);
     const channel = client.channels.cache.get(DATA_CHANNEL_ID);
     await channel.messages.fetch({ limit: 100 }).then((messages) => {
