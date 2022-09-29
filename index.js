@@ -13,8 +13,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const POST_CHANNEL_ID = process.env.POST_CHANNEL_ID;
-const DATA_CHANNEL_ID = process.env.DATA_CHANNEL_ID;
+const POST_CHANNEL_ID = process.env.POST_CHANNEL;
+const DATA_CHANNEL_ID = process.env.DATA_CHANNEL;
 const KING_ID = process.env.KING_ID;
 
 const row = new ActionRowBuilder().addComponents(
@@ -39,7 +39,7 @@ const client = new Client({
     GatewayIntentBits.MessageContent,
   ],
 });
-
+// trigger when !send
 client.on("messageCreate", async (msg) => {
   if (msg.author.id === `${KING_ID}`) {
     if (msg.content.includes("!send")) {
@@ -63,9 +63,10 @@ client.on("messageCreate", async (msg) => {
     }
   }
 });
-
+// button click action
 client.on("interactionCreate", async (action) => {
   if (action.customId === "takeBtn") {
+    // console.log(action);
     const MsgContent = action.message.content;
     const orderIDIndex = MsgContent.search("Order ID:");
     // console.log(orderIDIndex);
@@ -77,14 +78,15 @@ client.on("interactionCreate", async (action) => {
       messages.forEach(async (message) => {
         const jsonMSG = JSON.parse(message);
         if (jsonMSG.orderID == orderID) {
+          // console.log(jsonMSG.orderID);
           await action.user.send(
             `U TOOK ORDER WITH ID : ${orderID}\n username : ${jsonMSG.username}\n password : ${jsonMSG.password}\n Order details : ${jsonMSG.req}\n Price : ${jsonMSG.price}\n DM <@${KING_ID}> picture of BEFORE and AFTER.\n GOOD LUCK AND FA DA CHAI !`
           );
+          await action.message.edit({
+            content: `TOO LATE ORDER TAKEN!\n Order ID:${orderID}\n Order details:${jsonMSG.req}\n Price:${jsonMSG.price}`,
+            components: [disable_btn],
+          });
         }
-        await action.message.edit({
-          content: `TOO LATE ORDER TAKEN!\n Order ID:${orderID}\n Order details:${jsonMSG.req}\n Price:${jsonMSG.price}`,
-          components: [disable_btn],
-        });
       });
     });
 
@@ -96,7 +98,7 @@ client.on("interactionCreate", async (action) => {
 });
 
 client.once("ready", () => {
-  console.log("Bot Online 9/25/2022 update v2");
+  console.log("Bot Online 9/29 update");
 });
 
 client.login(BOT_TOKEN);
